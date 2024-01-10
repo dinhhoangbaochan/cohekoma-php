@@ -13,6 +13,7 @@ class Core {
 
     if ( file_exists( '../app/controllers/' . ucwords( $controllerName ) . '.php' ) ) {
       $this->currentController = ucwords( $controllerName );
+      unset( $url[0] );
     }
 
     require_once '../app/controllers/' . $this->currentController . '.php';
@@ -23,10 +24,13 @@ class Core {
     if ( isset( $methodName ) ) {
       if ( method_exists( $this->currentController, $methodName ) ) {
         $this->currentMethod = $methodName;
+        unset( $url[1] );
       }
     }
 
-    echo $this->currentMethod;
+    $this->params = ( $url ) ? array_values( $url ) : [];
+
+    call_user_func_array( [$this->currentController, $this->currentMethod], $this->params );
   }
 
   public function getUrl()

@@ -3,10 +3,16 @@
 class Pages {
   public function __construct()
   {
-    echo "This is pages";
+    
   }
 
-  public function about() {
-    echo "About";
+  public function index()
+  {
+    
+  }
+
+  public function about( $id )
+  {
+    echo $id;
   }
 }
