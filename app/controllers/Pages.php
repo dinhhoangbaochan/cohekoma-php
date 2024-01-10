@@ -5,4 +5,8 @@ class Pages {
   {
     echo "This is pages";
   }
+
+  public function about() {
+    echo "About";
+  }
 }

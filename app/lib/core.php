@@ -8,15 +8,25 @@ class Core {
   public function __construct()
   {
     $url = $this->getUrl();
+    $controllerName = $url[0];
+    $methodName = $url[1];
 
-    if ( file_exists( '../app/controllers/' . ucwords( $url[0] ) . '.php' ) ) {
-      $this->currentController = ucwords( $url[0] );
-      unset( $url[0] );
+    if ( file_exists( '../app/controllers/' . ucwords( $controllerName ) . '.php' ) ) {
+      $this->currentController = ucwords( $controllerName );
     }
 
     require_once '../app/controllers/' . $this->currentController . '.php';
 
     $this->currentController = new $this->currentController;
+
+    // Check if URL contains the method - which is second index of the url.
+    if ( isset( $methodName ) ) {
+      if ( method_exists( $this->currentController, $methodName ) ) {
+        $this->currentMethod = $methodName;
+      }
+    }
+
+    echo $this->currentMethod;
   }
 
   public function getUrl()
